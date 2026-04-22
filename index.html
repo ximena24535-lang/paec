@@ -1,30 +1,25 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Mi Proyecto PAEC</title>
+    <title>Entrega Final</title>
 </head>
 <body>
-
-    <h1>Hola</h1>
-
-    <div id="contenido"></div>
+    <h1 id="mensaje">Cargando...</h1>
 
     <script>
-        // Dejamos la conexión lista para que el profe vea que hay API
-        async function conectarAPI() {
+        async function conectarTodo() {
             try {
-                const res = await fetch('https://api-paec-yhp8.onrender.com/alumnos');
-                const datos = await res.json();
-                console.log("Conexión exitosa. Datos listos:", datos);
+                // 1. GitHub Pages llama a Render
+                const respuesta = await fetch('https://api-paec-yhp8.onrender.com/');
+                const texto = await respuesta.text();
                 
-                // Si quieres que aparezcan los datos después, 
-                // aquí es donde editaremos para llenar el div 'contenido'
-            } catch (e) {
-                console.log("Error de conexión:", e);
+                // 2. Ponemos el "Hola" que mandó el servidor
+                document.getElementById('mensaje').innerText = texto;
+            } catch (error) {
+                document.getElementById('mensaje').innerText = "Error de conexión";
             }
         }
-        conectarAPI();
+        conectarTodo();
     </script>
 </body>
 </html>
