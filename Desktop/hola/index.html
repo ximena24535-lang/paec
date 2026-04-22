@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Proyecto con Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Lista de Alumnos (Desde Supabase)</h1>
+    <ul id="lista-alumnos"></ul>
+
+    <script>
+        // 1. Configura tus credenciales (LAS QUE COPIASTE EN EL PASO 1)
+        const SUPABASE_URL = 'TU_URL_DE_SUPABASE';
+        const SUPABASE_KEY = 'TU_API_KEY_ANON';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function obtenerDatos() {
+            // 2. Consultar la tabla 'alumnos'
+            const { data, error } = await supabase
+                .from('alumnos')
+                .select('*');
+
+            if (error) {
+                console.error('Error:', error);
+                return;
+            }
+
+            // 3. Mostrar los datos en el HTML
+            const lista = document.getElementById('lista-alumnos');
+            data.forEach(alumno => {
+                const li = document.createElement('li');
+                li.textContent = alumno.nombre; // Asegúrate de que la columna se llame 'nombre'
+                lista.appendChild(li);
+            });
+        }
+
+        obtenerDatos();
+    </script>
+</body>
+</html>
